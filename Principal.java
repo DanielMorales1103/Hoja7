@@ -26,30 +26,66 @@ public class Principal {
 			//Fin de lectura de archivos
 			
 			//llenar listas de ambos idiomas con traducción a español
-			ArrayList<String> PalabrasIngles = new ArrayList<String>();
-			ArrayList<String> PalabrasFrances = new ArrayList<String>();
-			String ingles_español;
-			String frances_español;
-			for (int i =0;i<palabras.size();i++){
-				String[] fila = palabras.get(i).split(",");
-				ingles_español = fila[0].toLowerCase().trim()+","+fila[1].toLowerCase().trim();
-				frances_español = fila[2].toLowerCase().trim()+","+fila[1].toLowerCase().trim();
-				PalabrasIngles.add(ingles_español);
-				PalabrasFrances.add(frances_español);
-			}
-			//fin de llenado de listas
+			Controlador diccionario = new Controlador();
+			diccionario.crear_arboles(palabras);
 			
-			Arbol Ingles = new Arbol();
-			Arbol Frances = new Arbol();
+			String menu="1. In-order de ingles\n2. In-order de frances\n3. Agregar palabra\n4. Eliminar palabra\n5. Traducir texto\n6. Salir";
 			
-			for (int i = 0;i<PalabrasIngles.size();i++) {
-				Ingles.insertar(PalabrasIngles.get(i));
-				Frances.insertar(PalabrasFrances.get(i));				
+			boolean cicloprincipal=true;
+			while(cicloprincipal) {
+				System.out.println(menu);
+				int opcion = sr.nextInt();
+				sr.nextLine();
+				switch(opcion) {
+				case 1:
+					diccionario.InOrderIngles();
+					break;
+				case 2:
+					diccionario.InOrderFrances();
+					break;
+				case 3:
+					//agregar palabra
+					System.out.println("Ingrese palabra nueva: (Ingles,espanol,frances)");
+					String palabra = sr.nextLine();
+					
+					String[]traducciones = palabra.split(",");
+					System.out.println(palabra);
+					if(traducciones.length==3) {
+						diccionario.agregarpalabras(traducciones);
+					}else {
+						System.out.println("Formato Incorrecto");
+					}
+					break;
+				case 4:
+					//eliminar palabra
+					break;
+				case 5:
+					//traducir texto
+					System.out.println("Ingrese la ruta del archivo (incluya el nombre y la extención)");
+					//String ruta2 = sr.nextLine();
+					String ruta2 = "C:\\Users\\pc\\Documents\\uvg\\sem3\\algoritmos\\eclipse\\Hoja7\\texto.txt";
+					File archivo2 = new File(ruta2);
+					ArrayList<String> texto = new ArrayList<String>();
+					if(!archivo2.exists()) {
+						System.out.println("Archivo no encontrado, varificar ruta");
+					}else {
+						sw = new Scanner(archivo2, "UTF-8");
+						while (sw.hasNextLine()) {
+							texto.add(sw.nextLine());}
+						}
+					sw.close();	
+					System.out.println(diccionario.traducir(texto));
+					
+					break;
+				case 6:
+					cicloprincipal = false;
+					break;
+				default:
+					System.out.println("Ingrese un numero valido");
+					break;
+				}
 			}
-			//0Ingles.inorden();
-			//System.out.println("");
-			//Frances.inorden();
-			System.out.println(Ingles.existe("town"));
+			
 		}catch(Exception e){
 			System.out.println(e);
 		}
