@@ -1,7 +1,11 @@
 import java.io.File;
 import java.util.*;
 import java.io.FileWriter;
-
+/*
+    Programador Daniel Esteban Morales Urizar
+    Programa que traduce fraces en Ingles a Español y de Frances a Español por medio de un diccionario utilizando árboles binarios
+    Finalización 08/04/2022
+*/
 	
 public class Principal {
 	File archivo;
