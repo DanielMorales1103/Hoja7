@@ -28,7 +28,23 @@ public class Arbol {
         }
 
     }
-    
+    public String traductor(String palabra) {
+    	return traductor(this.raiz,palabra);
+    }
+    private String traductor(Nodo n, String palabra) {
+    	if (n == null) {
+    		return "*"+palabra+"*";
+    	}
+    	String[] cambio = n.getDato().split(",");
+    	if(cambio[0].trim().equals(palabra.toLowerCase())) {
+    		return cambio[1].trim();
+    	}else if(palabra.toLowerCase().compareTo(cambio[0].trim()) < 0) {
+    		return traductor(n.getIzquierda(), palabra);
+    	}else {
+    		return traductor(n.getDerecha(),palabra);
+    	}
+    	
+    }
     public void insertar(String dato) {
         if (this.raiz == null) {
             this.raiz = new Nodo(dato);
