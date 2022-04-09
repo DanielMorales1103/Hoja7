@@ -48,12 +48,22 @@ public class Controlador {
 				}
 			}
 			//Fin de detectar idioma
-			if(Es_ingles) {
-				texto_traducido="Es ingles";
+			if (Es_ingles && Es_frances) {
+				texto_traducido="Tiene palabras en ingles y frances, por lo que no se puede traducir";
+			}else if(Es_ingles) {				
+				for (int w = 0; w<frase.length;w++) {
+					String palabra2 = frase[w].trim();
+					texto_traducido+= Ingles.traductor(palabra2)+" ";
+				}
+				texto_traducido+="\n";
 			}else if(Es_frances) {
-				texto_traducido="Es frances";
+				for (int w = 0; w<frase.length;w++) {
+					String palabra2 = frase[w].trim();
+					texto_traducido+= Frances.traductor(palabra2)+" ";
+				}
+				texto_traducido+="\n";
 			}else {
-				texto_traducido="No es Ingles y tampoco Frances";
+				texto_traducido="No tiene palabras Ingles y tampoco Frances que se encuentren en el diccionario";
 			}
 			
 		}
